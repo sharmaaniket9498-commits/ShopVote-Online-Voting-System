@@ -1,0 +1,3 @@
+package com.shopvote;
+import jakarta.servlet.annotation.WebServlet;import jakarta.servlet.http.*;import java.io.*;
+@WebServlet("/logout") public class LogoutServlet extends HttpServlet {protected void doGet(HttpServletRequest r,HttpServletResponse s)throws IOException{HttpSession h=r.getSession(false);if(h!=null)h.invalidate();s.sendRedirect(r.getContextPath()+"/login.jsp?logout=1");}}

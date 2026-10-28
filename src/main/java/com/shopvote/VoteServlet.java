@@ -1,0 +1,5 @@
+package com.shopvote;
+import jakarta.servlet.*;import jakarta.servlet.annotation.WebServlet;import jakarta.servlet.http.*;import java.io.*;import java.util.*;
+@WebServlet("/vote") public class VoteServlet extends HttpServlet {
+ protected void doPost(HttpServletRequest r,HttpServletResponse s)throws ServletException,IOException{r.setCharacterEncoding("UTF-8");HttpSession h=r.getSession(false);String c=r.getContextPath();if(h==null||h.getAttribute("userEmail")==null){s.sendRedirect(c+"/login.jsp");return;}String e=(String)h.getAttribute("userEmail");if(ShopVoteStore.get().voted(e)){s.sendRedirect(c+"/results.jsp?status=already");return;}Map<Integer,String>a=new LinkedHashMap<>();for(int q=1;q<=4;q++)a.put(q,r.getParameter("q"+q));if(!ShopVoteStore.get().vote(e,a)){s.sendRedirect(c+"/vote.jsp?error=incomplete");return;}s.sendRedirect(c+"/results.jsp?status=success");}
+}
